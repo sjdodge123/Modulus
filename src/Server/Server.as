@@ -30,15 +30,19 @@ package Server
 			var moveInfo:Array = event.params as Array; 
 			playerShells[currentPlayer].setX(playerShells[currentPlayer].getX() + moveInfo[0]);
 			playerShells[currentPlayer].setY(playerShells[currentPlayer].getY() + moveInfo[1]);
+			var playerListings:Array = new Array();
 			var playerLoc:Array = new Array();
-			playerLoc.push(playerShells[currentPlayer].getX());
-			playerLoc.push(playerShells[currentPlayer].getY());
+			for(var i:int;i<playerShells.length;i++)
+			{
+				playerLoc.push(playerShells[i].getX());
+				playerLoc.push(playerShells[i].getY());
+				playerListings.push(playerLoc);
+			}
 			var file:Array = new Array();
 			file.push(0);
 			file.push(6000);
-			file.push(playerLoc);
+			file.push(playerListings);
 			coms.sendData(file);
-			trace(playerShells[0].getX());
 //			trace(playerShells[1].getX());
 		}
 		protected function addPlayer(event:ServerComsEvent):void
@@ -49,14 +53,24 @@ package Server
 			file1.push(5000);
 			file1.push(ships[0].getShipSpawnLoc());
 			
-//			trace(ships[0].getPlayerSpawnLoc().x);
 			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
-			var file:Array = new Array();
-			file.push(0);
-			file.push(5100);
-			file.push(ships[0].getPlayerSpawnLoc());
-			trace(playerShells[0].getX());
-			coms.sendData(file1,file);
+			var file2:Array = new Array();
+			file2.push(0);
+			file2.push(5100);
+			file2.push(ships[0].getPlayerSpawnLoc());
+			
+//			var file3:Array = new Array();
+//			file3.push(0);
+//			file3.push(1000);
+//			var playerListings:Array = new Array();
+//			for(var i:int=0;i<playerShells.length;i++)
+//			{
+//				playerListings.push(playerShells[i].getId());
+//			}
+//			file3.push(playerListings);
+//			
+			
+			coms.sendData(file1,file2);
 		}
 		
 	}

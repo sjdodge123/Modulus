@@ -2,6 +2,7 @@ package
 {
 	import Events.MessageEvent;
 	import Events.ScreenEvent;
+	import Events.ServerComsEvent;
 
 	public class Router
 	{
@@ -45,7 +46,7 @@ package
 				
 				if(route == 1000) // Connection INFO
 				{
-					trace(content.toString());
+					eventArray.push(new ServerComsEvent(ServerComsEvent.PLAYER_JOINED,content));
 				}
 				if(route == 5000) // Ship Spawn INFO
 				{
