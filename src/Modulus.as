@@ -1,7 +1,6 @@
 package
 {
 	import flash.display.Sprite;
-	
 	import Client.Client;
 	import Server.Server;
 	
@@ -11,8 +10,8 @@ package
 		public function Modulus()
 		{
 			var server:Server = new Server();
-			var myClient:Client = new Client();
-			myClient.joinServer("192.168.1.136",8087);
+			var myClient:Client = new Client(stage);
+			
 			addChild(myClient.getScreen());
 			
 		}

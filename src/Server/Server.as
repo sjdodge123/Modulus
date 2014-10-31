@@ -1,74 +1,59 @@
 package Server
-{
+{	
 	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.events.ServerSocketConnectEvent;
-	import flash.net.ServerSocket;
-	import flash.net.Socket;
+	
+	import Events.MessageEvent;
+	import Events.ServerComsEvent;
 
 	public class Server
 	{
-		private var serverSocket:ServerSocket;
-		public var ships:Vector.<ShipFrameShell> = new Vector.<ShipFrameShell>;
-		private var clientSockets:Vector.<Socket> = new Vector.<Socket>;
+		private var coms:ServerComs;
+		private var playerShells:Vector.<PlayerUnitShell> = new Vector.<PlayerUnitShell>;
+		private var ships:Vector.<ShipFrameShell> = new Vector.<ShipFrameShell>;
+		private var currentPlayer:int = 63;
 		public function Server()
 		{
-			serverSocket = new ServerSocket();
-			serverSocket.addEventListener( Event.CONNECT, connectHandler ); 
-			serverSocket.addEventListener( Event.CLOSE, onClose ); 
-			serverSocket.bind(8087,"192.168.1.136");
-			serverSocket.listen(); 
-			
+			coms = new ServerComs();
+			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
+			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
+			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
 			ships.push(new ShipFrameShell());
-		}	
-		protected function connectHandler(event:ServerSocketConnectEvent):void
-		{
-			var socket:Socket = event.socket as Socket; 
-			clientSockets.push(socket);
-			
-			socket.addEventListener( ProgressEvent.SOCKET_DATA, socketDataHandler); 
-			socket.addEventListener( Event.CLOSE, onClientClose ); 
-			socket.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
-			trace("Player joined");
-			
-			var packet:Array = new Array();
-			packet.push(2);
-			packet.push(5000);
-			packet.push(ships[0].getShipSpawnLoc());
-			socket.writeObject(packet);
-			socket.flush();
 		}
 		
-		protected function onIOError(event:IOErrorEvent):void
+		protected function changeIndex(event:MessageEvent):void
 		{
-			// TODO Auto-generated method stub
+			currentPlayer = event.params as int;
+		}
+		
+		protected function updatePlayer(event:MessageEvent):void
+		{
+			var moveInfo:Array = event.params as Array; 
+			playerShells[currentPlayer].setX(playerShells[currentPlayer].getX() + moveInfo[0]);
+			playerShells[currentPlayer].setY(playerShells[currentPlayer].getY() + moveInfo[1]);
+			var playerLoc:Array = new Array();
+			playerLoc.push(playerShells[currentPlayer].getX());
+			playerLoc.push(playerShells[currentPlayer].getY());
+			var file:Array = new Array();
+			file.push(0);
+			file.push(6000);
+			file.push(playerLoc);
+			coms.sendData(file);
+		}
+		protected function addPlayer(event:ServerComsEvent):void
+		{
+			var index:int = event.params as int;
+			var file1:Array = new Array();
+			file1.push(0);
+			file1.push(5000);
+			file1.push(ships[0].getShipSpawnLoc());
 			
+			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
+			var file:Array = new Array();
+			file.push(0);
+			file.push(5100);
+			file.push(ships[0].getPlayerSpawnLoc());
+			coms.sendData(file1,file);
 		}
 		
-		protected function socketDataHandler(event:ProgressEvent):void
-		{
-			var clientID:int = clientSockets.indexOf(event.target as Socket);
-			var socket:Socket = event.target as Socket;
-			var message:String = socket.readUTFBytes(socket.bytesAvailable); 
-//			if(message == "Test")
-//			{
-//				var packet:Array = new Array();
-//				packet.push(0);
-//				packet.push(1000);
-//				packet.push("Connection confirmed");
-//				socket.writeObject(packet);
-//				socket.flush();
-//			}
-		}
-		
-		protected function onClientClose(event:Event):void
-		{
-			trace( "Connection to client closed." ); 
-		}
-		protected function onClose(event:Event):void
-		{
-			trace( "Server socket closed by OS." ); 
-		}
 	}
 }

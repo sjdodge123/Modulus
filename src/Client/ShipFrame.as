@@ -6,9 +6,9 @@ package Client
 	public class ShipFrame extends Sprite
 	{
 		private var extWalls:Sprite;
-		public function ShipFrame(xSpawn:int,ySpawn:int) 
+		public function ShipFrame(spawnPointX:int,spawnPointY:int) 
 		{
-			buildExteriorWalls(xSpawn,ySpawn);
+			buildExteriorWalls(spawnPointX,spawnPointY);
 		}
 		
 		private function buildExteriorWalls(xSpawn,ySpawn):void

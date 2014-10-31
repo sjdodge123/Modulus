@@ -1,6 +1,7 @@
 package Server
 {
 	import flash.geom.Point;
+	import Client.PlayerUnit;
 	
 
 	public class ShipFrameShell
@@ -17,13 +18,13 @@ package Server
 			friendlyPlayers = new Vector.<PlayerUnit>;
 			enemyPlayers = new Vector.<PlayerUnit>;
 			shipSpawnLoc = new Point(x,y);
-			playerSpawnLoc = new Point(x +5,y+5);
+			playerSpawnLoc = new Point(x+5,y+5);
 		}
 		
 		public function addFriendly(friendly:PlayerUnit):void
 		{
 			friendlyPlayers.push(friendly);
-			friendly.spawnPlayer(playerSpawnLoc);
+//			friendly.spawnPlayer(playerSpawnLoc);
 		}
 		
 		public function addEnemy(enemy:PlayerUnit,loc:Point):void

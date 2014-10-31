@@ -1,69 +1,84 @@
 package Client
 {
+	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.events.ProgressEvent;
 	import flash.geom.Point;
-	import flash.net.Socket;
 	
+	import Events.MessageEvent;
+	import Events.MovementEvent;
+	import Events.ScreenEvent;
 
 	public class Client
 	{
-		private var socket:Socket;
 		private var screen:ClientScreen;
-		public function Client()
+		private var IO:IOMonitor;
+		private var coms:ClientComs;
+		private var player:PlayerUnit; 
+		public function Client(stage:Stage)
 		{
 			screen = new ClientScreen();
-		}
-		
-		public function joinServer(server:String, port:int):void
-		{
-			socket = new Socket(server,port);
-			socket.addEventListener(Event.CONNECT,connectHandler);
-		}
-		
-		
-		
-		
-		protected function connectHandler(event:Event):void
-		{
-			socket.addEventListener(ProgressEvent.SOCKET_DATA, socketDataHandler);
-			socket.writeUTFBytes("");
-			socket.flush();
-		}	
-		protected function socketDataHandler(event:ProgressEvent):void
-		{
-			var socket:Socket = event.target as Socket;
-			var packet:Array = socket.readObject();
+			coms = new ClientComs();
+			IO = new IOMonitor(stage);
+			IO.addEventListener(MovementEvent.FORWARD,handleKeys);
+			IO.addEventListener(MovementEvent.REVERSE,handleKeys);
+			IO.addEventListener(MovementEvent.LEFT,handleKeys);
+			IO.addEventListener(MovementEvent.RIGHT,handleKeys);
 			
-			var type:int = packet[0];
-			var route:int = packet[1];
-			var content:Object = packet[2];
-			if(type == 0) //String
+			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
+			coms.addEventListener(ScreenEvent.SPAWN_PLAYER,spawnPlayer);
+			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayer);
+			coms.joinServer("192.168.1.136",8087);
+		}
+		
+		protected function movePlayer(event:MessageEvent):void
+		{
+			player.x = event.params[0];
+			player.y = event.params[1];
+		}
+		
+		protected function handleKeys(event:MovementEvent):void
+		{
+			if(player != null)
 			{
-				
+				var moveChangeX:int= 0;
+				var moveChangeY:int= 0;
+				var moveChangeData:Array = new Array();
+				if(event.type == MovementEvent.FORWARD)
+				{
+					moveChangeY -=5;
+				}
+				if(event.type == MovementEvent.REVERSE)
+				{
+					moveChangeY +=5
+				}
+				if(event.type == MovementEvent.LEFT)
+				{
+					moveChangeX -=5
+				}
+				if(event.type == MovementEvent.RIGHT)
+				{
+					moveChangeX +=5
+				}
+				moveChangeData.push(moveChangeX);
+				moveChangeData.push(moveChangeY);
+				var file:Array = new Array();
+				file.push(0);
+				file.push(6000);
+				file.push(moveChangeData);
+				coms.sendData(file);
 			}
-			if(type == 1) //int
-			{
-				
-			}
-			if(type == 2) //point
-			{
-				
-			}
-			if(route == 1000) // Connection INFO
-			{
-				trace(content.toString());
-			}
-			if(route == 5000) // Ship Spawn INFO
-			{
-				var myShip:ShipFrame = new ShipFrame(content.x,content.y);
-				screen.addChild(myShip);
-			}
-			if(route == 5100) // Player Spawn INFO
-			{
-				
-				
-			}	
+		}
+		protected function spawnShip(event:ScreenEvent):void
+		{
+			var shipPoint:Point = new Point(event.params.x,event.params.y);
+			var myShip:ShipFrame = new ShipFrame(shipPoint.x,shipPoint.y);
+			screen.addChild(myShip);
+		}		
+		protected function spawnPlayer(event:ScreenEvent):void
+		{
+			var playerPoint:Point = new Point(event.params.x,event.params.y);
+			player = new PlayerUnit(playerPoint.x,playerPoint.y);
+			screen.addChild(player);
 		}
 		
 		public function getScreen():ClientScreen

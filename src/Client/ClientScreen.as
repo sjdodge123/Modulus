@@ -9,5 +9,14 @@ package Client
 			
 		}
 		
+		public function updateScreen(updateInfo:Array):void
+		{
+		
+		}
+		
+		
+		
+		
+		
 	}
 }
