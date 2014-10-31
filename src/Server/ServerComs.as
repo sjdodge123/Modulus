@@ -81,9 +81,9 @@ package Server
 				{
 					clientSockets[i].writeObject(router.getPacket());
 					clientSockets[i].flush();
-					router.clearPacket();
 				}
 			}
+			router.clearPacket();
 			timer.start();
 		}
 		

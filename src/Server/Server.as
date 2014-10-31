@@ -38,6 +38,8 @@ package Server
 			file.push(6000);
 			file.push(playerLoc);
 			coms.sendData(file);
+			trace(playerShells[0].getX());
+//			trace(playerShells[1].getX());
 		}
 		protected function addPlayer(event:ServerComsEvent):void
 		{
@@ -47,11 +49,13 @@ package Server
 			file1.push(5000);
 			file1.push(ships[0].getShipSpawnLoc());
 			
+//			trace(ships[0].getPlayerSpawnLoc().x);
 			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
 			var file:Array = new Array();
 			file.push(0);
 			file.push(5100);
 			file.push(ships[0].getPlayerSpawnLoc());
+			trace(playerShells[0].getX());
 			coms.sendData(file1,file);
 		}
 		

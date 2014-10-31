@@ -34,6 +34,7 @@ package Client
 		{
 			player.x = event.params[0];
 			player.y = event.params[1];
+			trace(player.x);
 		}
 		
 		protected function handleKeys(event:MovementEvent):void
@@ -78,6 +79,7 @@ package Client
 		{
 			var playerPoint:Point = new Point(event.params.x,event.params.y);
 			player = new PlayerUnit(playerPoint.x,playerPoint.y);
+			trace(player.x)
 			screen.addChild(player);
 		}
 		
