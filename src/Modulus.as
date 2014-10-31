@@ -11,9 +11,9 @@ package
 		public function Modulus()
 		{
 			var server:Server = new Server();
-			var client1:Client = new Client();
-			client1.joinServer("127.0.0.1",8087);
-			addChild(client1.getScreen());
+			var myClient:Client = new Client();
+			myClient.joinServer("192.168.1.136",8087);
+			addChild(myClient.getScreen());
 			
 		}
 	}

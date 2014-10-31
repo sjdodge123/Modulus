@@ -17,7 +17,7 @@ package Server
 			serverSocket = new ServerSocket();
 			serverSocket.addEventListener( Event.CONNECT, connectHandler ); 
 			serverSocket.addEventListener( Event.CLOSE, onClose ); 
-			serverSocket.bind(8087,"127.0.0.1");
+			serverSocket.bind(8087,"192.168.1.136");
 			serverSocket.listen(); 
 			
 			ships.push(new ShipFrameShell());
