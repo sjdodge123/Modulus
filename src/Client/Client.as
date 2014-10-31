@@ -27,9 +27,22 @@ package Client
 			
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
 			coms.addEventListener(ScreenEvent.SPAWN_PLAYER,spawnPlayer);
-			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,spawnPlayer);
+			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
 			coms.joinServer("192.168.1.136",8087);
+		}
+		
+		protected function updateListings(event:MessageEvent):void
+		{
+			var playerListings:Array = event.params as Array;
+			for(var i:int=0;i<playerListings.length;i++)
+			{
+				var playerLoc:Array = playerListings[i];
+				playerList = null;
+				playerList = new Vector.<PlayerUnit>; 
+				playerList.push(new PlayerUnit(playerLoc[0],playerLoc[1]));
+			}
+
 		}
 		
 		protected function movePlayers(event:MessageEvent):void

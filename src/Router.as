@@ -52,6 +52,10 @@ package
 				{
 					eventArray.push(new ScreenEvent(ScreenEvent.SPAWN_SHIP,content));			
 				}
+				if(route == 5001) // Ship Spawn INFO
+				{
+					eventArray.push(new MessageEvent(MessageEvent.UPDATE_LISTINGS,content));			
+				}
 				if(route == 5100) // Player Spawn INFO
 				{
 					eventArray.push(new ScreenEvent(ScreenEvent.SPAWN_PLAYER,content));			

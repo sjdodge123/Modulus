@@ -59,18 +59,29 @@ package Server
 			file2.push(5100);
 			file2.push(ships[0].getPlayerSpawnLoc());
 			
-//			var file3:Array = new Array();
-//			file3.push(0);
-//			file3.push(1000);
-//			var playerListings:Array = new Array();
-//			for(var i:int=0;i<playerShells.length;i++)
-//			{
-//				playerListings.push(playerShells[i].getId());
-//			}
-//			file3.push(playerListings);
-//			
+			var playerListings:Array = new Array();
+			var playerLoc:Array = new Array();
 			
-			coms.sendData(file1,file2);
+			if(playerShells.length >1)
+			{
+				for(var i:int;i<playerShells.length;i++)
+				{
+					playerLoc.push(playerShells[i].getX());
+					playerLoc.push(playerShells[i].getY());
+					playerListings.push(playerLoc);
+				}
+				
+				var file3:Array = new Array();
+				file3.push(0);
+				file3.push(5001);
+				file3.push(playerListings);
+				coms.sendData(file1,file2,file3);
+			}
+			else
+			{
+				coms.sendData(file1,file2);
+			}
+			
 		}
 		
 	}
