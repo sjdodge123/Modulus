@@ -5,6 +5,7 @@ package Events
 	public class ScreenEvent extends Event
 	{
 		public static const UPDATE_SCREEN:String = "update";
+		public static const INDEX_ORDER:String = "zIndex";
 		public static const SPAWN_PLAYER:String = "spawnPlayer";
 		public static const SPAWN_SHIP:String = "spawnShip";
 		public var params:Object;

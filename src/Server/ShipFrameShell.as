@@ -16,7 +16,6 @@ package Server
 		private var padding:int = 20;
 		public function ShipFrameShell() 
 		{
-			
 			friendlyPlayers = new Vector.<PlayerUnitShell>;
 			enemyPlayers = new Vector.<PlayerUnitShell>;
 			shipSpawnLoc = new Point(x,y);

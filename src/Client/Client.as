@@ -1,13 +1,12 @@
 package Client
 {
 	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.geom.Point;
 	
 	import Events.MessageEvent;
 	import Events.MovementEvent;
 	import Events.ScreenEvent;
-	import Events.ServerComsEvent;
+	
 
 	public class Client
 	{
@@ -18,7 +17,7 @@ package Client
 		private var myShip:ShipFrame;
 		public function Client(stage:Stage)
 		{
-			screen = new ClientScreen();
+			screen = new ClientScreen(stage);
 			coms = new ClientComs();
 			IO = new IOMonitor(stage);
 			IO.addEventListener(MovementEvent.FORWARD,handleKeys);
