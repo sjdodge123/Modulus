@@ -61,20 +61,21 @@ package Server
 //			file2.push(5100);
 //			file2.push(ships[0].getPlayerSpawnLoc());
 //			
-			var playerListings:Array = new Array();
-			var playerLoc:Array = new Array();
+			var shellData:Array = new Array();
+			
 			
 			for(var i:int;i<playerShells.length;i++)
 			{
+				var playerLoc:Array = new Array();
 				playerLoc.push(playerShells[i].getX());
 				playerLoc.push(playerShells[i].getY());
-				playerListings.push(playerLoc);
+				shellData.push(playerLoc);
 			}
 			
 			var file3:Array = new Array();
 			file3.push(0);
 			file3.push(5001);
-			file3.push(playerListings);
+			file3.push(shellData);
 			coms.sendData(file1,file3);
 			
 			

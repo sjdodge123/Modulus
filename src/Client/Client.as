@@ -45,12 +45,15 @@ package Client
 					var newPlayer:PlayerUnit = new PlayerUnit(playerLoc[0],playerLoc[1])
 					playerList.push(newPlayer);
 				}
-				screen.addChild(newPlayer);
 			}
 			else
 			{
-				
+				shellData = event.params as Array;
+				playerLoc = shellData[shellData.length-1]
+				newPlayer = new PlayerUnit(playerLoc[0],playerLoc[1])
+				playerList.push(newPlayer);
 			}
+			screen.addChild(newPlayer);
 		}
 		
 		protected function movePlayers(event:MessageEvent):void
