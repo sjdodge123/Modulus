@@ -30,6 +30,7 @@ package Server
 			var moveInfo:Array = event.params as Array; 
 			playerShells[currentPlayer].setX(playerShells[currentPlayer].getX() + moveInfo[0]);
 			playerShells[currentPlayer].setY(playerShells[currentPlayer].getY() + moveInfo[1]);
+//			trace(playerShells[1].getX());
 			var playerListings:Array = new Array();
 			var playerLoc:Array = new Array();
 			for(var i:int;i<playerShells.length;i++)
@@ -55,33 +56,28 @@ package Server
 			
 			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
 //			trace(playerShells);
-			var file2:Array = new Array();
-			file2.push(0);
-			file2.push(5100);
-			file2.push(ships[0].getPlayerSpawnLoc());
-			
+//			var file2:Array = new Array();
+//			file2.push(0);
+//			file2.push(5100);
+//			file2.push(ships[0].getPlayerSpawnLoc());
+//			
 			var playerListings:Array = new Array();
 			var playerLoc:Array = new Array();
 			
-			if(playerShells.length >1)
+			for(var i:int;i<playerShells.length;i++)
 			{
-				for(var i:int;i<playerShells.length;i++)
-				{
-					playerLoc.push(playerShells[i].getX());
-					playerLoc.push(playerShells[i].getY());
-					playerListings.push(playerLoc);
-				}
-				
-				var file3:Array = new Array();
-				file3.push(0);
-				file3.push(5001);
-				file3.push(playerListings);
-				coms.sendData(file1,file3,file2);
+				playerLoc.push(playerShells[i].getX());
+				playerLoc.push(playerShells[i].getY());
+				playerListings.push(playerLoc);
 			}
-			else
-			{
-				coms.sendData(file1,file2);
-			}
+			
+			var file3:Array = new Array();
+			file3.push(0);
+			file3.push(5001);
+			file3.push(playerListings);
+			coms.sendData(file1,file3);
+			
+			
 			
 		}
 		
