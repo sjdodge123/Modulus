@@ -54,6 +54,7 @@ package Server
 			file1.push(ships[0].getShipSpawnLoc());
 			
 			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
+//			trace(playerShells);
 			var file2:Array = new Array();
 			file2.push(0);
 			file2.push(5100);
@@ -75,7 +76,7 @@ package Server
 				file3.push(0);
 				file3.push(5001);
 				file3.push(playerListings);
-				coms.sendData(file1,file2,file3);
+				coms.sendData(file1,file3,file2);
 			}
 			else
 			{

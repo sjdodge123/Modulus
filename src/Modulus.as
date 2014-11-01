@@ -11,7 +11,8 @@ package
 		{
 			var server:Server = new Server();
 			var myClient:Client = new Client(stage);
-			
+//			var myClient2:Client = new Client(stage);
+
 			addChild(myClient.getScreen());
 			
 		}

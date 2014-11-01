@@ -15,6 +15,7 @@ package Client
 		private var IO:IOMonitor;
 		private var coms:ClientComs;
 		private var playerList:Vector.<PlayerUnit> = new Vector.<PlayerUnit>; 
+		private var myShip:ShipFrame;
 		public function Client(stage:Stage)
 		{
 			screen = new ClientScreen();
@@ -29,13 +30,13 @@ package Client
 			coms.addEventListener(ScreenEvent.SPAWN_PLAYER,spawnPlayer);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
-			coms.joinServer("192.168.1.136",8087);
+			coms.joinServer("192.168.1.133",8087);
 		}
 		
 		protected function updateListings(event:MessageEvent):void
 		{
 			var playerListings:Array = event.params as Array;
-			for(var i:int=0;i<playerListings.length;i++)
+			for(var i:int=0;i<playerListings.length-1;i++)
 			{
 				var playerLoc:Array = playerListings[i];
 				playerList = null;
@@ -88,15 +89,22 @@ package Client
 		}
 		protected function spawnShip(event:ScreenEvent):void
 		{
-			var shipPoint:Point = new Point(event.params.x,event.params.y);
-			var myShip:ShipFrame = new ShipFrame(shipPoint.x,shipPoint.y);
-			screen.addChild(myShip);
+			
+			if (myShip == null)
+			{
+				var shipPoint:Point = new Point(event.params.x,event.params.y);
+				myShip= new ShipFrame(shipPoint.x,shipPoint.y);
+				screen.addChild(myShip);
+			}
+			
+			
 		}		
 		protected function spawnPlayer(event:ScreenEvent):void
 		{
 			var playerPoint:Point = new Point(event.params.x,event.params.y);
 			playerList.push(new PlayerUnit(playerPoint.x,playerPoint.y));
 			screen.addChild(playerList[playerList.length-1]);
+//			trace(playerList);
 		}
 		
 		public function getScreen():ClientScreen

@@ -27,7 +27,7 @@ package Server
 			timer.start();
 			serverSocket.addEventListener( Event.CONNECT, connectHandler ); 
 			serverSocket.addEventListener( Event.CLOSE, onClose ); 
-			serverSocket.bind(8087,"192.168.1.136");
+			serverSocket.bind(8087,"192.168.1.133");
 			serverSocket.listen(); 
 		}	
 		
