@@ -14,26 +14,28 @@ package Server
 		private var currentPlayer:int = 63;
 		public function Server(stage:Stage)
 		{
-			
-			stage.addEventListener(Event.ENTER_FRAME,updateClients);
-			
+			stage.addEventListener(Event.ENTER_FRAME,updateClients);	
 			coms = new ServerComs();
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
 			ships.push(new ShipFrameShell());
-		}
-		
-		
+		}		
 		public function updateClients(e:Event):void
 		{
-			updateAllData();
 			coms.sendBuffer();
 		}
-		
-		
-		private function updateAllData():void
+		protected function changeIndex(event:MessageEvent):void
 		{
+			currentPlayer = event.params as int;
+		}
+		
+		protected function updatePlayer(event:MessageEvent):void
+		{
+			var currentX:int = playerShells[currentPlayer].getX();
+			var currentY:int = playerShells[currentPlayer].getY();
+			playerShells[currentPlayer].setX(currentX + event.params[0]);
+			playerShells[currentPlayer].setY(currentY + event.params[1]);
 			var shellData:Array = new Array();
 			for(var i:int;i<playerShells.length;i++)
 			{
@@ -47,33 +49,6 @@ package Server
 			file1.push(6000);
 			file1.push(shellData);
 			coms.sendData(file1);
-		}
-		
-		protected function changeIndex(event:MessageEvent):void
-		{
-			currentPlayer = event.params as int;
-		}
-		
-		protected function updatePlayer(event:MessageEvent):void
-		{
-			var currentX:int = playerShells[currentPlayer].getX();
-			var currentY:int = playerShells[currentPlayer].getY();
-			playerShells[currentPlayer].setX(currentX + event.params[0]);
-			playerShells[currentPlayer].setY(currentY + event.params[1]);
-			
-//			var shellData:Array = new Array();
-//			for(var i:int;i<playerShells.length;i++)
-//			{
-//				var playerLoc:Array = new Array();
-//				playerLoc.push(playerShells[i].getX());
-//				playerLoc.push(playerShells[i].getY());
-//				shellData.push(playerLoc);
-//			}
-//			var file1:Array = new Array();
-//			file1.push(0);
-//			file1.push(6000);
-//			file1.push(shellData);
-//			coms.sendData(file1);
 		}
 		protected function addPlayer(event:ServerComsEvent):void
 		{
