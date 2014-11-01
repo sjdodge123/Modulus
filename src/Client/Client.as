@@ -44,6 +44,7 @@ package Client
 					var playerLoc:Array = shellData[i];
 					var newPlayer:PlayerUnit = new PlayerUnit(playerLoc[0],playerLoc[1])
 					playerList.push(newPlayer);
+					screen.addChild(newPlayer);
 				}
 			}
 			else
@@ -52,8 +53,9 @@ package Client
 				playerLoc = shellData[shellData.length-1]
 				newPlayer = new PlayerUnit(playerLoc[0],playerLoc[1])
 				playerList.push(newPlayer);
+				screen.addChild(newPlayer);
 			}
-			screen.addChild(newPlayer);
+			
 		}
 		
 		protected function movePlayers(event:MessageEvent):void
