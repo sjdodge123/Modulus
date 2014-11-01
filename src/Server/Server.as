@@ -1,7 +1,8 @@
 package Server
 {	
-	import flash.events.Event;
 	import flash.display.Stage;
+	import flash.events.Event;
+	
 	import Events.MessageEvent;
 	import Events.ServerComsEvent;
 
@@ -13,7 +14,9 @@ package Server
 		private var currentPlayer:int = 63;
 		public function Server(stage:Stage)
 		{
-			stage.addEventListener(Event.ENTER_FRAME, update);
+			
+			stage.addEventListener(Event.ENTER_FRAME,updateClients);
+			
 			coms = new ServerComs();
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
@@ -22,14 +25,14 @@ package Server
 		}
 		
 		
-		public function update(e:Event):void
+		public function updateClients(e:Event):void
 		{
-			updateAllLocs();
+			updateAllData();
 			coms.sendBuffer();
 		}
 		
 		
-		private function updateAllLocs():void
+		private function updateAllData():void
 		{
 			var shellData:Array = new Array();
 			for(var i:int;i<playerShells.length;i++)

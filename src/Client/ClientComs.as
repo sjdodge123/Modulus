@@ -28,8 +28,11 @@ package Client
 		protected function socketDataHandler(event:ProgressEvent):void
 		{
 			var socket:Socket = event.target as Socket;
-			var packet:Array = socket.readObject();
-			var packetEventArray:Array = router.unpack(packet);
+			while(socket.bytesAvailable)
+			{
+				var packet:Array = socket.readObject();
+				var packetEventArray:Array = router.unpack(packet);
+			}
 			for(var i:int =0;i<packetEventArray.length;i++)
 			{
 				dispatchEvent(packetEventArray[i]);

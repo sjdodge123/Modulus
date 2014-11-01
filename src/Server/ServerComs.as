@@ -57,10 +57,13 @@ package Server
 		protected function socketDataHandler(event:ProgressEvent):void
 		{
 			var socket:Socket = event.target as Socket;
-			var index:int = clientSockets.indexOf(socket);
-			router.tagId(index);
-			var packet:Array = socket.readObject();
-			var packetEventArray:Array = router.unpack(packet);
+			while(socket.bytesAvailable)
+			{
+				var index:int = clientSockets.indexOf(socket);
+				router.tagId(index);
+				var packet:Array = socket.readObject();
+				var packetEventArray:Array = router.unpack(packet);
+			}
 			for(var i:int =0;i<packetEventArray.length;i++)
 			{
 				dispatchEvent(packetEventArray[i]);
@@ -74,6 +77,7 @@ package Server
 				if(router.getPacket() != null)
 				{
 					clientSockets[i].writeObject(router.getPacket());
+//					trace(clientSockets[i].bytesPending);
 					clientSockets[i].flush();
 				}
 			}
