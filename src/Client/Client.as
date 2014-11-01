@@ -29,7 +29,7 @@ package Client
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
-			coms.joinServer("192.168.1.133",8087);
+			coms.joinServer("192.168.1.136",8087);
 		}
 		
 		protected function updateListings(event:MessageEvent):void
@@ -54,9 +54,7 @@ package Client
 				playerList.push(newPlayer);
 				screen.addChild(newPlayer);
 			}
-			
 		}
-		
 		protected function movePlayers(event:MessageEvent):void
 		{
 			var shellData:Array = event.params as Array;

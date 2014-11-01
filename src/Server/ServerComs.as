@@ -5,7 +5,6 @@ package Server
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.ServerSocketConnectEvent;
-	import flash.events.TimerEvent;
 	import flash.net.ServerSocket;
 	import flash.net.Socket;
 	import flash.utils.Timer;
@@ -22,12 +21,9 @@ package Server
 		{
 			serverSocket = new ServerSocket();
 			router = new Router();
-			timer = new Timer(5,1);
-			timer.addEventListener(TimerEvent.TIMER,sendBuffer);
-			timer.start();
 			serverSocket.addEventListener( Event.CONNECT, connectHandler ); 
 			serverSocket.addEventListener( Event.CLOSE, onClose ); 
-			serverSocket.bind(8087,"192.168.1.133");
+			serverSocket.bind(8087,"192.168.1.136");
 			serverSocket.listen(); 
 		}	
 		
@@ -52,7 +48,6 @@ package Server
 			}
 			
 		}
-		
 		protected function onIOError(event:IOErrorEvent):void
 		{
 			// TODO Auto-generated method stub
@@ -72,9 +67,8 @@ package Server
 			}
 		}
 		
-		protected function sendBuffer(event:TimerEvent):void
+		public function sendBuffer():void
 		{
-			timer.reset();
 			for(var i:int=0; i<clientSockets.length;i++)
 			{
 				if(router.getPacket() != null)
@@ -84,10 +78,9 @@ package Server
 				}
 			}
 			router.clearPacket();
-			timer.start();
 		}
 		
-
+		
 		
 		protected function onClientClose(event:Event):void
 		{

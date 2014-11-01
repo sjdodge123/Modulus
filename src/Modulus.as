@@ -9,7 +9,7 @@ package
 	{
 		public function Modulus()
 		{
-			var server:Server = new Server();
+			var server:Server = new Server(stage);
 			var myClient:Client = new Client(stage);
 //			var myClient2:Client = new Client(stage);
 
