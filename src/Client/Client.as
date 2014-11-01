@@ -27,7 +27,6 @@ package Client
 			IO.addEventListener(MovementEvent.RIGHT,handleKeys);
 			
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
-//			coms.addEventListener(ScreenEvent.SPAWN_PLAYER,spawnPlayer);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
 			coms.joinServer("192.168.1.133",8087);
@@ -112,14 +111,6 @@ package Client
 			
 			
 		}		
-//		protected function spawnPlayer(event:ScreenEvent):void  //file2
-//		{
-//			var playerPoint:Point = new Point(event.params.x,event.params.y);
-//			playerList.push(new PlayerUnit(playerPoint.x,playerPoint.y));
-//			screen.addChild(playerList[playerList.length-1]);
-//			trace(playerList);
-//			
-//		}
 		
 		public function getScreen():ClientScreen
 		{
