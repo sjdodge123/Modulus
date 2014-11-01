@@ -17,7 +17,7 @@ package Client
 			extWalls.graphics.clear();
 			extWalls.graphics.beginFill(0xf2f2f2);
 			extWalls.graphics.lineStyle(2, 0xC0C0C0, 100);
-			extWalls.graphics.drawRect(xSpawn, ySpawn, 400, 400);
+			extWalls.graphics.drawRect(xSpawn, ySpawn,400, 400);
 			extWalls.useHandCursor = false;
 			addChild(extWalls);
 		}

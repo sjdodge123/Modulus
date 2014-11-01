@@ -34,21 +34,25 @@ package Server
 		{
 			var currentX:int = playerShells[currentPlayer].getX();
 			var currentY:int = playerShells[currentPlayer].getY();
-			playerShells[currentPlayer].setX(currentX + event.params[0]);
-			playerShells[currentPlayer].setY(currentY + event.params[1]);
-			var shellData:Array = new Array();
-			for(var i:int;i<playerShells.length;i++)
+			
+			if(ships[0].checkBounds(currentX + event.params[0],currentY + event.params[1]))
 			{
-				var playerLoc:Array = new Array();
-				playerLoc.push(playerShells[i].getX());
-				playerLoc.push(playerShells[i].getY());
-				shellData.push(playerLoc);
+				playerShells[currentPlayer].setX(currentX + event.params[0]);
+				playerShells[currentPlayer].setY(currentY + event.params[1]);
+				var shellData:Array = new Array();
+				for(var i:int;i<playerShells.length;i++)
+				{
+					var playerLoc:Array = new Array();
+					playerLoc.push(playerShells[i].getX());
+					playerLoc.push(playerShells[i].getY());
+					shellData.push(playerLoc);
+				}
+				var file1:Array = new Array();
+				file1.push(0);
+				file1.push(6000);
+				file1.push(shellData);
+				coms.sendData(file1);
 			}
-			var file1:Array = new Array();
-			file1.push(0);
-			file1.push(6000);
-			file1.push(shellData);
-			coms.sendData(file1);
 		}
 		protected function addPlayer(event:ServerComsEvent):void
 		{
@@ -57,9 +61,9 @@ package Server
 			file1.push(0);
 			file1.push(5000);
 			file1.push(ships[0].getShipSpawnLoc());
-			
-			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
-			
+			var player:PlayerUnitShell= new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y)
+			playerShells.push(player);
+			ships[0].addFriendly(player);
 			var shellData:Array = new Array();
 			for(var i:int;i<playerShells.length;i++)
 			{
@@ -73,10 +77,9 @@ package Server
 			file2.push(0);
 			file2.push(5001);
 			file2.push(shellData);
-			coms.sendData(file1,file2);
 			
 			
-			
+			coms.sendData(file1,file2);	
 		}
 		
 	}
