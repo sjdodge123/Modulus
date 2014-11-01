@@ -27,24 +27,24 @@ package Server
 		
 		protected function updatePlayer(event:MessageEvent):void
 		{
-			var moveInfo:Array = event.params as Array; 
-			playerShells[currentPlayer].setX(playerShells[currentPlayer].getX() + moveInfo[0]);
-			playerShells[currentPlayer].setY(playerShells[currentPlayer].getY() + moveInfo[1]);
-//			trace(playerShells[1].getX());
-			var playerListings:Array = new Array();
-			var playerLoc:Array = new Array();
+			var currentX:int = playerShells[currentPlayer].getX();
+			var currentY:int = playerShells[currentPlayer].getY();
+			playerShells[currentPlayer].setX(currentX + event.params[0]);
+			playerShells[currentPlayer].setY(currentY + event.params[1]);
+			
+			var shellData:Array = new Array();
 			for(var i:int;i<playerShells.length;i++)
 			{
+				var playerLoc:Array = new Array();
 				playerLoc.push(playerShells[i].getX());
 				playerLoc.push(playerShells[i].getY());
-				playerListings.push(playerLoc);
+				shellData.push(playerLoc);
 			}
-			var file:Array = new Array();
-			file.push(0);
-			file.push(6000);
-			file.push(playerListings);
-			coms.sendData(file);
-//			trace(playerShells[1].getX());
+			var file1:Array = new Array();
+			file1.push(0);
+			file1.push(6000);
+			file1.push(shellData);
+			coms.sendData(file1);
 		}
 		protected function addPlayer(event:ServerComsEvent):void
 		{
@@ -55,9 +55,8 @@ package Server
 			file1.push(ships[0].getShipSpawnLoc());
 			
 			playerShells.push(new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y));
+			
 			var shellData:Array = new Array();
-			
-			
 			for(var i:int;i<playerShells.length;i++)
 			{
 				var playerLoc:Array = new Array();

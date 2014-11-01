@@ -59,15 +59,13 @@ package Client
 		
 		protected function movePlayers(event:MessageEvent):void
 		{
-			var playerListings:Array = event.params as Array;
-//			trace(playerList);
-			for(var i:int=0;i<playerList.length;i++)
+			var shellData:Array = event.params as Array;
+			for(var i:int=0;i<shellData.length;i++)
 			{
-				var playerLoc:Array = playerListings[i];
+				var playerLoc:Array = shellData[i];
 				playerList[i].x = playerLoc[0];
 				playerList[i].y = playerLoc[1];
 			}
-//			trace(playerList[1].x);
 		}
 		
 		protected function handleKeys(event:MovementEvent):void
