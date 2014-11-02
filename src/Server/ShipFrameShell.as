@@ -7,19 +7,25 @@ package Server
 	{
 		private var friendlyPlayers:Vector.<PlayerUnitShell>;
 		private var enemyPlayers:Vector.<PlayerUnitShell>;
+		private var seats:Vector.<SeatShell>;
 		private var playerSpawnLoc:Point;
 		private var shipSpawnLoc:Point;
 		private var x:int = 50;
 		private var y:int = 50;
-		private var width:int = 700;
-		private var height:int = 400;
+		private var width:int = 600;
+		private var height:int = 600;
 		private var padding:int = 20;
-		public function ShipFrameShell() 
+		public function ShipFrameShell(... seats) 
 		{
 			friendlyPlayers = new Vector.<PlayerUnitShell>;
 			enemyPlayers = new Vector.<PlayerUnitShell>;
+			this.seats = new Vector.<SeatShell>;
 			shipSpawnLoc = new Point(x,y);
 			playerSpawnLoc = new Point(x+padding,y+padding);
+			for(var i:int;i<seats.length;i++)
+			{
+				this.seats.push(seats[i]);
+			}
 		}
 		
 		public function addFriendly(friendly:PlayerUnitShell):void
@@ -39,6 +45,16 @@ package Server
 				return true;
 			}
 			return false;
+		}
+		
+		public function getSeats():Array
+		{
+			var seatArray:Array = new Array();
+			for(var i:int=0;i<this.seats.length;i++)
+			{
+				seatArray.push(this.seats[i])
+			}
+			return seatArray;
 		}
 		
 		public function getWidth():int

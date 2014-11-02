@@ -6,7 +6,6 @@ package Client
 	import Events.MessageEvent;
 	import Events.MovementEvent;
 	import Events.ScreenEvent;
-	
 
 	public class Client
 	{
@@ -96,7 +95,6 @@ package Client
 		}
 		protected function spawnShip(event:ScreenEvent):void
 		{
-			
 			if (myShip == null)
 			{
 				var shipData:Array = event.params as Array;
@@ -104,7 +102,8 @@ package Client
 				var yLoc:int = shipData[1];
 				var widthData:int = shipData[2];
 				var heightData:int = shipData[3];
-				myShip= new ShipFrame(xLoc,yLoc,widthData,heightData);
+				var seatArray:Array = shipData[4];
+				myShip= new ShipFrame(xLoc,yLoc,widthData,heightData,seatArray);
 				screen.addChild(myShip);
 			}
 			

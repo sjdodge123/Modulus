@@ -19,7 +19,7 @@ package Server
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
-			ships.push(new ShipFrameShell());
+			ships.push(new ShipFrameShell(new SeatShell(55,450,0)));
 		}		
 		public function updateClients(e:Event):void
 		{
@@ -66,6 +66,7 @@ package Server
 			shipData.push(ships[0].getShipSpawnLoc().y);
 			shipData.push(ships[0].getWidth());
 			shipData.push(ships[0].getHeight());
+			shipData.push(ships[0].getSeats());
 			file1.push(shipData);
 			
 			var player:PlayerUnitShell= new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y)
@@ -84,8 +85,6 @@ package Server
 			file2.push(0);
 			file2.push(5001);
 			file2.push(shellData);
-			
-			
 			coms.sendData(file1,file2);	
 		}
 		

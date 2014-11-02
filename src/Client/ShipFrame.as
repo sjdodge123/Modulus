@@ -6,9 +6,22 @@ package Client
 	public class ShipFrame extends Sprite
 	{
 		private var extWalls:Sprite;
-		public function ShipFrame(spawnPointX:int,spawnPointY:int,shipWidth:int,shipHeight:int) 
+		private var seats:Vector.<Seat>;
+		public function ShipFrame(spawnPointX:int,spawnPointY:int,shipWidth:int,shipHeight:int,seats:Array) 
 		{
+			this.seats = new Vector.<Seat>;
 			buildExteriorWalls(spawnPointX,spawnPointY,shipWidth,shipHeight);
+			addSeats(seats);
+		}
+		
+		private function addSeats(seats:Array):void
+		{
+			for(var i:int=0;i<seats.length;i++)
+			{
+				this.seats.push(new Seat(seats[i].x,seats[i].y,seats[i].width,seats[i].height,seats[i].type));
+				addChild(this.seats[i]);
+			}
+			trace(this.seats.length);
 		}
 		
 		private function buildExteriorWalls(xSpawn:int,ySpawn:int,shipWidth:int,shipHeight:int):void
