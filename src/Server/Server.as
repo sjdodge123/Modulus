@@ -19,7 +19,7 @@ package Server
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
-			ships.push(new ShipFrameShell(new SeatShell(55,450,0)));
+			ships.push(new ShipFrameShell(new SeatShell(225,75,1),new SeatShell(125,75,0)));
 		}		
 		public function updateClients(e:Event):void
 		{
@@ -56,6 +56,7 @@ package Server
 		}
 		protected function addPlayer(event:ServerComsEvent):void
 		{
+
 			var index:int = event.params as int;
 			
 			var file1:Array = new Array();

@@ -12,8 +12,8 @@ package Server
 		private var shipSpawnLoc:Point;
 		private var x:int = 50;
 		private var y:int = 50;
-		private var width:int = 600;
-		private var height:int = 600;
+		private var width:int = 250;
+		private var height:int = 100;
 		private var padding:int = 20;
 		public function ShipFrameShell(... seats) 
 		{
