@@ -57,10 +57,17 @@ package Server
 		protected function addPlayer(event:ServerComsEvent):void
 		{
 			var index:int = event.params as int;
+			
 			var file1:Array = new Array();
 			file1.push(0);
 			file1.push(5000);
-			file1.push(ships[0].getShipSpawnLoc());
+			var shipData:Array = new Array();
+			shipData.push(ships[0].getShipSpawnLoc().x);
+			shipData.push(ships[0].getShipSpawnLoc().y);
+			shipData.push(ships[0].getWidth());
+			shipData.push(ships[0].getHeight());
+			file1.push(shipData);
+			
 			var player:PlayerUnitShell= new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y)
 			playerShells.push(player);
 			ships[0].addFriendly(player);

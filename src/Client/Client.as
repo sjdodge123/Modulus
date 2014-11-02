@@ -99,8 +99,12 @@ package Client
 			
 			if (myShip == null)
 			{
-				var shipPoint:Point = new Point(event.params.x,event.params.y);
-				myShip= new ShipFrame(shipPoint.x,shipPoint.y);
+				var shipData:Array = event.params as Array;
+				var xLoc:int = shipData[0];
+				var yLoc:int = shipData[1];
+				var widthData:int = shipData[2];
+				var heightData:int = shipData[3];
+				myShip= new ShipFrame(xLoc,yLoc,widthData,heightData);
 				screen.addChild(myShip);
 			}
 			

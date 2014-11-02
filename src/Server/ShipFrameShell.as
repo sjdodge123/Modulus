@@ -9,9 +9,9 @@ package Server
 		private var enemyPlayers:Vector.<PlayerUnitShell>;
 		private var playerSpawnLoc:Point;
 		private var shipSpawnLoc:Point;
-		private var x:int = 100;
-		private var y:int = 100;
-		private var width:int = 400;
+		private var x:int = 50;
+		private var y:int = 50;
+		private var width:int = 700;
 		private var height:int = 400;
 		private var padding:int = 20;
 		public function ShipFrameShell() 
@@ -39,6 +39,15 @@ package Server
 				return true;
 			}
 			return false;
+		}
+		
+		public function getWidth():int
+		{
+			return width;
+		}
+		public function getHeight():int
+		{
+			return height;
 		}
 		
 		public function getShipSpawnLoc():Point
