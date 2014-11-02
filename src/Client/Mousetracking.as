@@ -13,7 +13,7 @@ package Client
 		public function Mousetracking(stage:Stage)
 		{
 			cursor.graphics.beginFill(0x000000); 
-			cursor.graphics.drawCircle(0,0,20); 
+			cursor.graphics.drawCircle(0,0,5); 
 			cursor.graphics.endFill(); 
 			addChild(cursor);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,redrawCursor);
