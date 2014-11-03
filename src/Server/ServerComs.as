@@ -13,19 +13,23 @@ package Server
 
 	public class ServerComs extends EventDispatcher
 	{
-		private var serverSocket:ServerSocket;
+		private static var serverSocket:ServerSocket;
 		private var clientSockets:Vector.<Socket> = new Vector.<Socket>;
 		private var router:Router;
 		private var timer:Timer;
 		public function ServerComs()
 		{
-			serverSocket = new ServerSocket();
 			router = new Router();
-			serverSocket.addEventListener( Event.CONNECT, connectHandler ); 
-			serverSocket.addEventListener( Event.CLOSE, onClose ); 
-			serverSocket.bind(8087,"192.168.1.136");
+		}
+		
+		public function startServer(server:String, port:int):void
+		{
+			serverSocket = new ServerSocket();
+			serverSocket.addEventListener(Event.CONNECT,connectHandler);
+			serverSocket.addEventListener( Event.CLOSE, onClose );
+			serverSocket.bind(port,server);
 			serverSocket.listen(); 
-		}	
+		}
 		
 		
 		protected function connectHandler(event:ServerSocketConnectEvent):void

@@ -5,6 +5,7 @@ package Events
 	public class ServerComsEvent extends Event
 	{
 		public static const PLAYER_JOINED:String = "playerJoined";
+		public static const SEND_MESSAGE:String = "sendMessage";
 		public var params:Object;
 		public function ServerComsEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 
 		{

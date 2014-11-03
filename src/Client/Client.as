@@ -17,7 +17,7 @@ package Client
 		private var playerList:Vector.<PlayerUnit>; 
 		private var myShip:ShipFrame;
 		private var myPlayer:PlayerUnit;
-		public function Client(stage:Stage)
+		public function Client(stage:Stage,clientIP:String,clientPort:int)
 		{
 			screen = new ClientScreen(stage);
 			coms = new ClientComs();
@@ -37,7 +37,7 @@ package Client
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
 			coms.addEventListener(SpawnEvent.BULLET,spawnBullet);
-			coms.joinServer("192.168.1.136",8087);
+			coms.joinServer(clientIP,clientPort);
 		}
 		
 		protected function spawnBullet(event:SpawnEvent):void

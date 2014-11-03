@@ -9,8 +9,8 @@ package
 	{
 		public function Modulus()
 		{
-			var server:Server = new Server(stage);
-			var myClient:Client = new Client(stage);
+			var server:Server = new Server(stage,"192.168.1.136",8087);
+			var myClient:Client = new Client(stage,"192.168.1.136",8087);
 //			var myClient2:Client = new Client(stage);
 
 			addChild(myClient.getScreen());
