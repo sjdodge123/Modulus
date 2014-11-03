@@ -7,8 +7,8 @@ package Client
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
 	
-	import Events.MovementEvent;
 	import Events.ActionEvent;
+	import Events.MovementEvent;
 
 	public class IOMonitor extends EventDispatcher
 	{
@@ -16,6 +16,8 @@ package Client
 		private var reverse:Boolean;
 		private var right:Boolean;
 		private var left:Boolean;
+		private var mouseClick:Boolean;
+		private var clickEvent:MouseEvent;
 		
 		public function IOMonitor(gameStage:Stage)
 		{
@@ -27,12 +29,19 @@ package Client
 		
 		protected function mouseClicked(event:MouseEvent):void
 		{
-			dispatchEvent(new ActionEvent(ActionEvent.FIRE,event));
+			mouseClick = true;
+			clickEvent = event;
+			
 		}
 		
 		protected function updateKeys(event:Event):void
 		{
-			if(forward && right)
+			if(mouseClick)
+			{
+				dispatchEvent(new ActionEvent(ActionEvent.FIRE,clickEvent));
+				mouseClick = false;
+			}
+			else if(forward && right)
 			{
 				dispatchEvent(new MovementEvent(MovementEvent.FORWARD_RIGHT,null));
 			}
@@ -64,7 +73,6 @@ package Client
 			{
 				dispatchEvent(new MovementEvent(MovementEvent.RIGHT,null));
 			}
-			
 		}
 		
 		private function keyPressed(event:KeyboardEvent):void
