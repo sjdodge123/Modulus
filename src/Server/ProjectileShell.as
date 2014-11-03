@@ -9,7 +9,6 @@ package Server
 		
 		public function ProjectileShell(spawnX:int,spawnY:int,dirX:Number,dirY:Number)
 		{
-			
 			this.x = spawnX + 100*dirX;
 			this.y = spawnY + 100*dirY;
 			this.dirX = dirX;

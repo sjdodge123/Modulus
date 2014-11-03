@@ -14,7 +14,7 @@ package Client
 			circle.graphics.clear();
 			circle.graphics.beginFill(0xBDFCC9);
 			circle.graphics.lineStyle(2, 0xC0C0C0, 100);
-			circle.graphics.drawCircle(radius,radius, radius);
+			circle.graphics.drawCircle(0,0, radius);
 			circle.useHandCursor = false;
 			addChild(circle);
 		}

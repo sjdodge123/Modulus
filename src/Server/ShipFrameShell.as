@@ -15,7 +15,7 @@ package Server
 		private var y:int = 50;
 		private var width:int = 450;
 		private var height:int = 400;
-		private var padding:int = 20;
+		private var radius:int = 20;
 		public function ShipFrameShell(... seats) 
 		{
 			friendlyPlayers = new Vector.<PlayerUnitShell>;
@@ -23,7 +23,7 @@ package Server
 			projectiles = new Vector.<ProjectileShell>;
 			this.seats = new Vector.<SeatShell>;
 			shipSpawnLoc = new Point(x,y);
-			playerSpawnLoc = new Point(x+padding,y+padding);
+			playerSpawnLoc = new Point(x+radius+10,y+radius+10);
 			for(var i:int;i<seats.length;i++)
 			{
 				this.seats.push(seats[i]);
@@ -56,7 +56,7 @@ package Server
 		
 		public function checkBounds(xValue:int,yValue:int):Boolean
 		{
-			if((width+x-padding*2 > xValue ) && (xValue > x) && (yValue < height + y-padding*2) && (yValue > y ))
+			if((width+x -radius > xValue ) && (xValue > x +radius) && (yValue < height + y -radius) && (yValue > y +radius ))
 			{
 				return true;
 			}
