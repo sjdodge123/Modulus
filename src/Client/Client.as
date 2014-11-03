@@ -24,6 +24,10 @@ package Client
 			IO.addEventListener(MovementEvent.REVERSE,handleKeys);
 			IO.addEventListener(MovementEvent.LEFT,handleKeys);
 			IO.addEventListener(MovementEvent.RIGHT,handleKeys);
+			IO.addEventListener(MovementEvent.FORWARD_RIGHT,handleKeys);
+			IO.addEventListener(MovementEvent.FORWARD_LEFT,handleKeys);
+			IO.addEventListener(MovementEvent.REVERSE_RIGHT,handleKeys);
+			IO.addEventListener(MovementEvent.REVERSE_LEFT,handleKeys);
 			IO.addEventListener(ActionEvent.ACTION_PRESSED,performAction);
 			
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
@@ -74,23 +78,45 @@ package Client
 		{
 			var moveChangeX:int= 0;
 			var moveChangeY:int= 0;
+			var moveAmount:int = 5;
 			var moveChangeData:Array = new Array();
 			if(event.type == MovementEvent.FORWARD)
 			{
-				moveChangeY -=5;
+				moveChangeY -=moveAmount;
 			}
 			if(event.type == MovementEvent.REVERSE)
 			{
-				moveChangeY +=5
+				moveChangeY +=moveAmount;
 			}
 			if(event.type == MovementEvent.LEFT)
 			{
-				moveChangeX -=5
+				moveChangeX -=moveAmount;
 			}
 			if(event.type == MovementEvent.RIGHT)
 			{
-				moveChangeX +=5
+				moveChangeX +=moveAmount;
 			}
+			if(event.type == MovementEvent.FORWARD_RIGHT)
+			{
+				moveChangeX +=moveAmount/Math.SQRT2;
+				moveChangeY -=moveAmount/Math.SQRT2;
+			}
+			if(event.type == MovementEvent.FORWARD_LEFT)
+			{
+				moveChangeX -=moveAmount/Math.SQRT2;
+				moveChangeY -=moveAmount/Math.SQRT2;
+			}
+			if(event.type == MovementEvent.REVERSE_LEFT)
+			{
+				moveChangeX -=moveAmount/Math.SQRT2;
+				moveChangeY +=moveAmount/Math.SQRT2;
+			}
+			if(event.type == MovementEvent.REVERSE_RIGHT)
+			{
+				moveChangeX +=moveAmount/Math.SQRT2;
+				moveChangeY +=moveAmount/Math.SQRT2;
+			}
+			
 			moveChangeData.push(moveChangeX);
 			moveChangeData.push(moveChangeY);
 			coms.sendFile(0,6000,moveChangeData);

@@ -57,7 +57,7 @@ package
 				{
 					eventArray.push(new MessageEvent(MessageEvent.UPDATE_POSITION,file.content));			
 				}
-				if(file.route  == 6001) // Player Movement
+				if(file.route  == 6001) // Action Performed
 				{
 					eventArray.push(new ActionEvent(ActionEvent.BOARD_SEAT,file.content));			
 				}

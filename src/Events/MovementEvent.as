@@ -8,7 +8,11 @@ package Events
 		public static const REVERSE:String = "reverse";
 		public static const LEFT:String = "left";
 		public static const RIGHT:String = "right";
-		public static const UPDATE:String = "right";
+		public static const FORWARD_RIGHT:String = "forward_right";
+		public static const FORWARD_LEFT:String = "forward_left";
+		public static const REVERSE_RIGHT:String = "reverse_right";
+		public static const REVERSE_LEFT:String = "reverse_left";
+		public static const UPDATE:String = "update";
 		public var params:Object;
 		public function MovementEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 
 		{
