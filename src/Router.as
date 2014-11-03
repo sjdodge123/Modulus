@@ -12,9 +12,8 @@ package
 		private var currentId:int = 0;
 		public function Router()
 		{
+			
 		}
-		
-		
 		public function pack(file:DataFile):void
 		{
 			if(packet == null)

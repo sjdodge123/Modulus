@@ -11,7 +11,7 @@ package Server
 		{
 			
 			this.x = spawnX + 100*dirX;
-			this.y = spawnY + 100*dirX;
+			this.y = spawnY + 100*dirY;
 			this.dirX = dirX;
 			this.dirY = dirY;
 		}
