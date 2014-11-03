@@ -24,7 +24,7 @@ package Server
 		private var width:int = 450;
 		private var height:int = 400;
 		private var radius:int = 20;
-		private var currentPlayer:int;
+		private var currentPlayer:int =63;
 		public function ShipFrameShell(coms:ServerComs, ... seats) 
 		{
 			friendlyPlayers = new Vector.<PlayerUnit>;

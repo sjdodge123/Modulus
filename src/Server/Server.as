@@ -18,14 +18,13 @@ package Server
 			coms.startServer(serverIP,serverPort);
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			ships.push(new ShipFrameShell(coms,new SeatShell(225,75,1),new SeatShell(125,75,0)));
-			ships.push(new ShipFrameShell(coms,new SeatShell(125,75,1),new SeatShell(225,75,0)));
 		}
 		
 		protected function addPlayer(event:ServerComsEvent):void
 		{
+			event.stopPropagation();
 			var newPlayer:PlayerShell = new PlayerShell(event.params as int,shipId);
 			ships[newPlayer.getHomeShipId()].addFriendly(newPlayer);
-			shipId++;
 		}
 		
 		public function updateClients(e:Event):void
