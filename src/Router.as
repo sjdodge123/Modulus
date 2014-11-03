@@ -4,6 +4,7 @@ package
 	import Events.MessageEvent;
 	import Events.ScreenEvent;
 	import Events.ServerComsEvent;
+	import Events.SpawnEvent;
 
 	public class Router
 	{
@@ -53,6 +54,10 @@ package
 				{
 					eventArray.push(new MessageEvent(MessageEvent.UPDATE_LISTINGS,file.content));			
 				}
+				if(file.route  == 5002) // Spawn Bullet
+				{
+					eventArray.push(new SpawnEvent(SpawnEvent.BULLET,file.content));			
+				}
 				if(file.route  == 6000) // Player Movement
 				{
 					eventArray.push(new MessageEvent(MessageEvent.UPDATE_POSITION,file.content));			
@@ -60,6 +65,10 @@ package
 				if(file.route  == 6001) // Action Performed
 				{
 					eventArray.push(new ActionEvent(ActionEvent.BOARD_SEAT,file.content));			
+				}
+				if(file.route  == 6002) // Mouse Clicked
+				{
+					eventArray.push(new ActionEvent(ActionEvent.FIRE,file.content));			
 				}
 			}
 			return eventArray;

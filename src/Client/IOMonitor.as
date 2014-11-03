@@ -4,8 +4,11 @@ package Client
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
+	
 	import Events.MovementEvent;
+	import Events.ActionEvent;
 
 	public class IOMonitor extends EventDispatcher
 	{
@@ -18,7 +21,13 @@ package Client
 		{
 			gameStage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
 			gameStage.addEventListener(KeyboardEvent.KEY_UP, keyReleased);
+			gameStage.addEventListener(MouseEvent.CLICK,mouseClicked);
 			gameStage.addEventListener(Event.ENTER_FRAME, updateKeys);
+		}
+		
+		protected function mouseClicked(event:MouseEvent):void
+		{
+			dispatchEvent(new ActionEvent(ActionEvent.FIRE,event));
 		}
 		
 		protected function updateKeys(event:Event):void

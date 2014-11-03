@@ -6,6 +6,7 @@ package Events
 	{
 		public static const ACTION_PRESSED:String = "action";
 		public static const BOARD_SEAT:String = "sit";
+		public static const FIRE:String = "fire";
 		
 		public var params:Object;
 		public function ActionEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 

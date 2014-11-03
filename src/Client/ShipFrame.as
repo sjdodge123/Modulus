@@ -7,11 +7,19 @@ package Client
 	{
 		private var extWalls:Sprite;
 		private var seats:Vector.<Seat>;
+		private var projectiles:Vector.<Projectile>;
 		public function ShipFrame(spawnPointX:int,spawnPointY:int,shipWidth:int,shipHeight:int,seats:Array) 
 		{
 			this.seats = new Vector.<Seat>;
+			projectiles = new Vector.<Projectile>;
 			buildExteriorWalls(spawnPointX,spawnPointY,shipWidth,shipHeight);
 			addSeats(seats);
+		}
+		
+		public function spawnBullet(spawnX:Number,spawnY:Number):void
+		{
+			projectiles.push(new Projectile(spawnX,spawnY));
+			addChild(projectiles[projectiles.length-1]);
 		}
 		
 		private function addSeats(seats:Array):void

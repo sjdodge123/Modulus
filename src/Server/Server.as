@@ -2,7 +2,6 @@ package Server
 {	
 	import flash.display.Stage;
 	import flash.events.Event;
-	
 	import Events.ActionEvent;
 	import Events.MessageEvent;
 	import Events.ServerComsEvent;
@@ -20,9 +19,16 @@ package Server
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
+			coms.addEventListener(ActionEvent.FIRE,mouseClicked);
 			coms.addEventListener(ActionEvent.BOARD_SEAT,sitDown);
 			ships.push(new ShipFrameShell(new SeatShell(225,75,1),new SeatShell(125,75,0)));
 		}		
+		
+		protected function mouseClicked(event:ActionEvent):void
+		{
+			var bulletData:Array = ships[0].addProjectile(playerShells[currentPlayer].getX(),playerShells[currentPlayer].getY(),event.params[0],event.params[1]);
+			coms.sendFile(0,5002,bulletData);
+		}
 		
 		protected function sitDown(event:Event):void
 		{

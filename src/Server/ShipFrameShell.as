@@ -7,6 +7,7 @@ package Server
 	{
 		private var friendlyPlayers:Vector.<PlayerUnitShell>;
 		private var enemyPlayers:Vector.<PlayerUnitShell>;
+		private var projectiles:Vector.<ProjectileShell>;
 		private var seats:Vector.<SeatShell>;
 		private var playerSpawnLoc:Point;
 		private var shipSpawnLoc:Point;
@@ -19,6 +20,7 @@ package Server
 		{
 			friendlyPlayers = new Vector.<PlayerUnitShell>;
 			enemyPlayers = new Vector.<PlayerUnitShell>;
+			projectiles = new Vector.<ProjectileShell>;
 			this.seats = new Vector.<SeatShell>;
 			shipSpawnLoc = new Point(x,y);
 			playerSpawnLoc = new Point(x+padding,y+padding);
@@ -36,6 +38,20 @@ package Server
 		public function addEnemy(enemy:PlayerUnitShell):void
 		{
 			
+		}
+		
+		public function addProjectile(spawnX:int,spawnY:int,mouseX:int,mouseY:int):Array
+		{
+			var dx:Number = mouseX - spawnX;
+			var dy:Number = mouseY - spawnY;
+			var mag:Number = Math.sqrt(dx*dx+dy*dy);
+			var dirX:Number = dx/mag;
+			var dirY:Number = dy/mag;
+			projectiles.push(new ProjectileShell(spawnX,spawnY,dirX,dirY));
+			var bulletData:Array = new Array();
+			bulletData.push(projectiles[projectiles.length-1].getX());
+			bulletData.push(projectiles[projectiles.length-1].getY());
+			return bulletData;
 		}
 		
 		public function checkBounds(xValue:int,yValue:int):Boolean

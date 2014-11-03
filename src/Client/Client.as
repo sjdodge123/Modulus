@@ -7,6 +7,7 @@ package Client
 	import Events.MessageEvent;
 	import Events.MovementEvent;
 	import Events.ScreenEvent;
+	import Events.SpawnEvent;
 
 	public class Client
 	{
@@ -15,6 +16,7 @@ package Client
 		private var coms:ClientComs;
 		private var playerList:Vector.<PlayerUnit>; 
 		private var myShip:ShipFrame;
+		private var myPlayer:PlayerUnit;
 		public function Client(stage:Stage)
 		{
 			screen = new ClientScreen(stage);
@@ -28,17 +30,27 @@ package Client
 			IO.addEventListener(MovementEvent.FORWARD_LEFT,handleKeys);
 			IO.addEventListener(MovementEvent.REVERSE_RIGHT,handleKeys);
 			IO.addEventListener(MovementEvent.REVERSE_LEFT,handleKeys);
-			IO.addEventListener(ActionEvent.ACTION_PRESSED,performAction);
+//			IO.addEventListener(ActionEvent.ACTION_PRESSED,performAction);
+			IO.addEventListener(ActionEvent.FIRE,performAction);
 			
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
+			coms.addEventListener(SpawnEvent.BULLET,spawnBullet);
 			coms.joinServer("192.168.1.136",8087);
+		}
+		
+		protected function spawnBullet(event:SpawnEvent):void
+		{
+			myShip.spawnBullet(event.params[0],event.params[1]);
 		}
 		
 		protected function performAction(event:ActionEvent):void
 		{
-			
+			var mouseArray:Array = new Array();
+			mouseArray.push(event.params.stageX);
+			mouseArray.push(event.params.stageY);
+			coms.sendFile(0,6002,mouseArray);
 		}
 		protected function updateListings(event:MessageEvent):void
 		{
@@ -53,6 +65,7 @@ package Client
 					playerList.push(newPlayer);
 					screen.addChild(newPlayer);
 				}
+				myPlayer = playerList[playerList.length-1];
 			}
 			else
 			{
