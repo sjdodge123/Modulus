@@ -5,6 +5,7 @@ package Client
 	import flash.ui.Keyboard;
 	import Events.MovementEvent;
 	import flash.display.Stage;
+	import Events.ActionEvent;
 
 	public class IOMonitor extends EventDispatcher
 	{
@@ -35,6 +36,11 @@ package Client
 				case Keyboard.D:
 				{
 					dispatchEvent(new MovementEvent(MovementEvent.RIGHT,null));
+					break;
+				}
+				case Keyboard.E:
+				{
+					dispatchEvent(new ActionEvent(ActionEvent.ACTION_PRESSED,null));
 					break;
 				}
 			}

@@ -21,7 +21,6 @@ package Client
 				this.seats.push(new Seat(seats[i].x,seats[i].y,seats[i].width,seats[i].height,seats[i].type));
 				addChild(this.seats[i]);
 			}
-			trace(this.seats.length);
 		}
 		
 		private function buildExteriorWalls(xSpawn:int,ySpawn:int,shipWidth:int,shipHeight:int):void

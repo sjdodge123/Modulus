@@ -7,10 +7,10 @@ package Client
 	
 	import Events.ScreenEvent;
 
-	public class Mousetracking extends Sprite
+	public class MouseTracking extends Sprite
 	{
 		private var cursor:Sprite = new Sprite();
-		public function Mousetracking(stage:Stage)
+		public function MouseTracking(stage:Stage)
 		{
 			cursor.graphics.beginFill(0x000000); 
 			cursor.graphics.drawCircle(0,0,5); 

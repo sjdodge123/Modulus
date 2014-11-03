@@ -3,6 +3,7 @@ package Server
 	import flash.display.Stage;
 	import flash.events.Event;
 	
+	import Events.ActionEvent;
 	import Events.MessageEvent;
 	import Events.ServerComsEvent;
 
@@ -19,8 +20,15 @@ package Server
 			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
+			coms.addEventListener(ActionEvent.BOARD_SEAT,sitDown);
 			ships.push(new ShipFrameShell(new SeatShell(225,75,1),new SeatShell(125,75,0)));
 		}		
+		
+		protected function sitDown(event:Event):void
+		{
+						
+		}		
+		
 		public function updateClients(e:Event):void
 		{
 			coms.sendBuffer();
@@ -47,29 +55,18 @@ package Server
 					playerLoc.push(playerShells[i].getY());
 					shellData.push(playerLoc);
 				}
-				var file1:Array = new Array();
-				file1.push(0);
-				file1.push(6000);
-				file1.push(shellData);
-				coms.sendData(file1);
+				coms.sendFile(0,6000,shellData);
 			}
 		}
 		protected function addPlayer(event:ServerComsEvent):void
 		{
-
 			var index:int = event.params as int;
-			
-			var file1:Array = new Array();
-			file1.push(0);
-			file1.push(5000);
 			var shipData:Array = new Array();
 			shipData.push(ships[0].getShipSpawnLoc().x);
 			shipData.push(ships[0].getShipSpawnLoc().y);
 			shipData.push(ships[0].getWidth());
 			shipData.push(ships[0].getHeight());
 			shipData.push(ships[0].getSeats());
-			file1.push(shipData);
-			
 			var player:PlayerUnitShell= new PlayerUnitShell(index,ships[0].getPlayerSpawnLoc().x,ships[0].getPlayerSpawnLoc().y)
 			playerShells.push(player);
 			ships[0].addFriendly(player);
@@ -81,12 +78,8 @@ package Server
 				playerLoc.push(playerShells[i].getY());
 				shellData.push(playerLoc);
 			}
-			
-			var file2:Array = new Array();
-			file2.push(0);
-			file2.push(5001);
-			file2.push(shellData);
-			coms.sendData(file1,file2);	
+			coms.sendFile(0,5000,shipData);
+			coms.sendFile(0,5001,shellData);
 		}
 		
 	}

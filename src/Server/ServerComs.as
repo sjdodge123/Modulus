@@ -40,11 +40,18 @@ package Server
 			dispatchEvent(new ServerComsEvent(ServerComsEvent.PLAYER_JOINED,index));
 		}
 		
-		public function sendData(... file):void
+		
+		public function sendFile(type:int,route:int,content:Object):void
 		{
-			for(var i:int=0;i<file.length;i++)
+			var file:DataFile = new DataFile(type,route,content);
+			sendData(file);
+		}
+		
+		private function sendData(... folder):void
+		{
+			for(var i:int=0;i<folder.length;i++)
 			{
-				router.pack(file[i]);
+				router.pack(folder[i]);
 			}
 			
 		}

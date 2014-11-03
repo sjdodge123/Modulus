@@ -39,7 +39,14 @@ package Client
 			}
 			
 		}
-		public function sendData(file:Array):void
+		
+		public function sendFile(type:int,route:int,content:Object):void
+		{
+			var file:DataFile = new DataFile(type,route,content);
+			sendData(file);
+		}
+		
+		private function sendData(file:DataFile):void
 		{
 			router.pack(file);
 			socket.writeObject(router.getPacket());

@@ -6,10 +6,10 @@ package Client
 
 	public class ClientScreen extends Sprite
 	{
-		private var mouse:Mousetracking;
+		private var mouse:MouseTracking;
 		public function ClientScreen(stage:Stage)
 		{
-			mouse = new Mousetracking(stage);
+			mouse = new MouseTracking(stage);
 			addChild(mouse);
 			mouse.addEventListener(ScreenEvent.INDEX_ORDER,moveToFront);
 		}

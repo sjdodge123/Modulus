@@ -1,8 +1,9 @@
 package Client
 {
 	import flash.display.Stage;
-	import flash.geom.Point;
+	import flash.events.Event;
 	
+	import Events.ActionEvent;
 	import Events.MessageEvent;
 	import Events.MovementEvent;
 	import Events.ScreenEvent;
@@ -23,6 +24,7 @@ package Client
 			IO.addEventListener(MovementEvent.REVERSE,handleKeys);
 			IO.addEventListener(MovementEvent.LEFT,handleKeys);
 			IO.addEventListener(MovementEvent.RIGHT,handleKeys);
+			IO.addEventListener(ActionEvent.ACTION_PRESSED,performAction);
 			
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
@@ -30,6 +32,10 @@ package Client
 			coms.joinServer("192.168.1.136",8087);
 		}
 		
+		protected function performAction(event:ActionEvent):void
+		{
+			
+		}
 		protected function updateListings(event:MessageEvent):void
 		{
 			if(playerList == null)
@@ -87,11 +93,7 @@ package Client
 			}
 			moveChangeData.push(moveChangeX);
 			moveChangeData.push(moveChangeY);
-			var file:Array = new Array();
-			file.push(0);
-			file.push(6000);
-			file.push(moveChangeData);
-			coms.sendData(file);
+			coms.sendFile(0,6000,moveChangeData);
 		}
 		protected function spawnShip(event:ScreenEvent):void
 		{
@@ -103,11 +105,9 @@ package Client
 				var widthData:int = shipData[2];
 				var heightData:int = shipData[3];
 				var seatArray:Array = shipData[4];
-				myShip= new ShipFrame(xLoc,yLoc,widthData,heightData,seatArray);
+				myShip = new ShipFrame(xLoc,yLoc,widthData,heightData,seatArray);
 				screen.addChild(myShip);
 			}
-			
-			
 		}		
 		
 		public function getScreen():ClientScreen

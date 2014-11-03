@@ -1,5 +1,6 @@
 package
 {
+	import Events.ActionEvent;
 	import Events.MessageEvent;
 	import Events.ScreenEvent;
 	import Events.ServerComsEvent;
@@ -13,7 +14,7 @@ package
 		}
 		
 		
-		public function pack(file:Array):void
+		public function pack(file:DataFile):void
 		{
 			if(packet == null)
 			{
@@ -38,27 +39,27 @@ package
 			eventArray.push(new MessageEvent(MessageEvent.CLIENT_ID,currentId));
 			for(var i:int=0;i<packet.length;i++)
 			{
-				var file:Array = packet[i];
-				var type:int = file[0];
-				var route:int = file[1];
-				var content:Object = file[2];
-			
+				var file:DataFile = new DataFile(packet[i].type,packet[i].route,packet[i].content);
 				
-				if(route == 1000) // Connection INFO
+				if(file.route == 1000) // Connection INFO
 				{
-					eventArray.push(new ServerComsEvent(ServerComsEvent.PLAYER_JOINED,content));
+					eventArray.push(new ServerComsEvent(ServerComsEvent.PLAYER_JOINED,file.content));
 				}
-				if(route == 5000) // Ship Spawn INFO
+				if(file.route  == 5000) // Ship Spawn INFO
 				{
-					eventArray.push(new ScreenEvent(ScreenEvent.SPAWN_SHIP,content));			
+					eventArray.push(new ScreenEvent(ScreenEvent.SPAWN_SHIP,file.content));			
 				}
-				if(route == 5001) // Update Listings
+				if(file.route  == 5001) // Update Listings
 				{
-					eventArray.push(new MessageEvent(MessageEvent.UPDATE_LISTINGS,content));			
+					eventArray.push(new MessageEvent(MessageEvent.UPDATE_LISTINGS,file.content));			
 				}
-				if(route == 6000) // Player Movement
+				if(file.route  == 6000) // Player Movement
 				{
-					eventArray.push(new MessageEvent(MessageEvent.UPDATE_POSITION,content));			
+					eventArray.push(new MessageEvent(MessageEvent.UPDATE_POSITION,file.content));			
+				}
+				if(file.route  == 6001) // Player Movement
+				{
+					eventArray.push(new ActionEvent(ActionEvent.BOARD_SEAT,file.content));			
 				}
 			}
 			return eventArray;
