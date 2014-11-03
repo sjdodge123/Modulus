@@ -1,20 +1,20 @@
 package Server
 {
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	
 	import Events.ActionEvent;
 	import Events.MessageEvent;
 	import Events.ServerComsEvent;
+	import Client.PlayerUnit;
 	
 
-	public class ShipFrameShell extends EventDispatcher
+	public class ShipFrameShell
 	{
 		private var coms:ServerComs;
-		private var playerShells:Vector.<PlayerUnitShell> = new Vector.<PlayerUnitShell>;
-		private var friendlyPlayers:Vector.<PlayerUnitShell>;
-		private var enemyPlayers:Vector.<PlayerUnitShell>;
+		private var playerUnitShells:Vector.<PlayerUnitShell> = new Vector.<PlayerUnitShell>;
+		private var friendlyPlayers:Vector.<PlayerUnit>;
+		private var enemyPlayers:Vector.<PlayerUnit>;
 		private var projectiles:Vector.<ProjectileShell>;
 		private var seats:Vector.<SeatShell>;
 		private var playerSpawnLoc:Point;
@@ -27,14 +27,13 @@ package Server
 		private var currentPlayer:int;
 		public function ShipFrameShell(coms:ServerComs, ... seats) 
 		{
-			friendlyPlayers = new Vector.<PlayerUnitShell>;
-			enemyPlayers = new Vector.<PlayerUnitShell>;
+			friendlyPlayers = new Vector.<PlayerUnit>;
+			enemyPlayers = new Vector.<PlayerUnit>;
 			projectiles = new Vector.<ProjectileShell>;
 			this.seats = new Vector.<SeatShell>;
 			this.coms = coms;
 			coms.addEventListener(ActionEvent.FIRE,mouseClicked);
 			coms.addEventListener(MessageEvent.CLIENT_ID,changeIndex);
-			coms.addEventListener(ServerComsEvent.PLAYER_JOINED,addPlayer);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,updatePlayer);
 			coms.addEventListener(ActionEvent.BOARD_SEAT,sitDown);
 			shipSpawnLoc = new Point(x,y);
@@ -56,18 +55,18 @@ package Server
 		
 		protected function updatePlayer(event:MessageEvent):void
 		{
-			var currentX:int = playerShells[currentPlayer].getX();
-			var currentY:int = playerShells[currentPlayer].getY();
+			var currentX:int = playerUnitShells[currentPlayer].getX();
+			var currentY:int = playerUnitShells[currentPlayer].getY();
 			if(checkBounds(currentX + event.params[0],currentY + event.params[1]))
 			{
-				playerShells[currentPlayer].setX(currentX + event.params[0]);
-				playerShells[currentPlayer].setY(currentY + event.params[1]);
+				playerUnitShells[currentPlayer].setX(currentX + event.params[0]);
+				playerUnitShells[currentPlayer].setY(currentY + event.params[1]);
 				var shellData:Array = new Array();
-				for(var i:int;i<playerShells.length;i++)
+				for(var i:int;i<playerUnitShells.length;i++)
 				{
 					var playerLoc:Array = new Array();
-					playerLoc.push(playerShells[i].getX());
-					playerLoc.push(playerShells[i].getY());
+					playerLoc.push(playerUnitShells[i].getX());
+					playerLoc.push(playerUnitShells[i].getY());
 					shellData.push(playerLoc);
 				}
 				coms.sendFile(0,6000,shellData);
@@ -76,39 +75,37 @@ package Server
 		
 		protected function addPlayer(event:ServerComsEvent):void
 		{
-			var index:int = event.params as int;
-			var shipData:Array = new Array();
-			shipData.push(getShipSpawnLoc().x);
-			shipData.push(getShipSpawnLoc().y);
-			shipData.push(getWidth());
-			shipData.push(getHeight());
-			shipData.push(getSeats());
-			var player:PlayerUnitShell= new PlayerUnitShell(index,getPlayerSpawnLoc().x,getPlayerSpawnLoc().y)
-			playerShells.push(player);
-			addFriendly(player);
-			var shellData:Array = new Array();
-			for(var i:int;i<playerShells.length;i++)
-			{
-				var playerLoc:Array = new Array();
-				playerLoc.push(playerShells[i].getX());
-				playerLoc.push(playerShells[i].getY());
-				shellData.push(playerLoc);
-			}
-			coms.sendFile(0,5000,shipData);
-			coms.sendFile(0,5001,shellData);
+			
 		}
 		
 		
 		
 		protected function mouseClicked(event:ActionEvent):void
 		{
-			var bulletData:Array = addProjectile(playerShells[currentPlayer].getX(),playerShells[currentPlayer].getY(),event.params[0],event.params[1]);
+			var bulletData:Array = addProjectile(playerUnitShells[currentPlayer].getX(),playerUnitShells[currentPlayer].getY(),event.params[0],event.params[1]);
 			coms.sendFile(0,5002,bulletData);
 		}
 		
-		public function addFriendly(friendly:PlayerUnitShell):void
+		public function addFriendly(player:PlayerShell):void
 		{
-			friendlyPlayers.push(friendly);
+			var shipData:Array = new Array();
+			shipData.push(getShipSpawnLoc().x);
+			shipData.push(getShipSpawnLoc().y);
+			shipData.push(getWidth());
+			shipData.push(getHeight());
+			shipData.push(getSeats());
+			var playerUnit:PlayerUnitShell= new PlayerUnitShell(player.getPlayerId(),getPlayerSpawnLoc().x,getPlayerSpawnLoc().y)
+			playerUnitShells.push(playerUnit);
+			var shellData:Array = new Array();
+			for(var i:int;i<playerUnitShells.length;i++)
+			{
+				var playerLoc:Array = new Array();
+				playerLoc.push(playerUnitShells[i].getX());
+				playerLoc.push(playerUnitShells[i].getY());
+				shellData.push(playerLoc);
+			}
+			coms.sendFile(0,5000,shipData);
+			coms.sendFile(0,5001,shellData);
 		}
 		
 		public function addEnemy(enemy:PlayerUnitShell):void
