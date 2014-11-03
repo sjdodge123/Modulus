@@ -37,6 +37,7 @@ package Server
 			socket.addEventListener( Event.CLOSE, onClientClose ); 
 			socket.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			trace("Player joined");
+			router.clearPacket();
 			dispatchEvent(new ServerComsEvent(ServerComsEvent.PLAYER_JOINED,index));
 		}
 		

@@ -73,7 +73,6 @@ package Client
 				playerList[i].y = playerLoc[1];
 			}
 		}
-		
 		protected function handleKeys(event:MovementEvent):void
 		{
 			var moveChangeX:int= 0;

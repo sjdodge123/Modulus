@@ -5,8 +5,6 @@ package Client
 	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	
-	import Events.ActionEvent;
 	import Events.MovementEvent;
 
 	public class IOMonitor extends EventDispatcher
@@ -110,43 +108,7 @@ package Client
 					right = false;
 					break;
 				}
+			}
 		}
-//			if((event.keyCode==Keyboard.W && Keyboard.D))
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.FORWARD_RIGHT,null));
-//			}
-//			else if((event.keyCode==Keyboard.W && Keyboard.A))
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.FORWARD_LEFT,null));
-//			}
-//			else if((event.keyCode==Keyboard.S && Keyboard.D))
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.REVERSE_RIGHT,null));
-//			}
-//			else if((event.keyCode==Keyboard.S && Keyboard.A))
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.REVERSE_LEFT,null));
-//			}
-//			else if(event.keyCode == Keyboard.W)
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.FORWARD,null));
-//			}
-//			else if(event.keyCode == Keyboard.A)
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.LEFT,null));
-//			}
-//			else if(event.keyCode==Keyboard.S)
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.REVERSE,null));
-//			}
-//			else if(event.keyCode==Keyboard.D)
-//			{
-//				dispatchEvent(new MovementEvent(MovementEvent.RIGHT,null));
-//			}
-//			else if(event.keyCode==Keyboard.E)
-//			{
-//				dispatchEvent(new ActionEvent(ActionEvent.ACTION_PRESSED,null));
-//			}	
-	}
 	}
 }
