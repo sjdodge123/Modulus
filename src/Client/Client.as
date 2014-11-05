@@ -54,7 +54,14 @@ package Client
 		
 		protected function spawnBullet(event:SpawnEvent):void
 		{
-			myShip.spawnBullet(event.params[0],event.params[1],event.params[2],event.params[3]);
+			var bulletData:Array = event.params as Array;
+			for(var i:int=0;i<bulletData.length;i++)
+			{
+				var bulletLoc:Array = bulletData[i];
+				myShip.spawnBullet(bulletLoc[0],bulletLoc[1],bulletLoc[2],bulletLoc[3]);
+			}
+			
+			
 		}
 		
 		protected function killBullet(event:SpawnEvent):void

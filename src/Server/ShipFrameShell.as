@@ -119,8 +119,19 @@ package Server
 				playerLoc.push(playerUnitShells[i].getY());
 				shellData.push(playerLoc);
 			}
+			var bulletData:Array = new Array();
+			for(var j:int;j<projectiles.length;j++)
+			{
+				var bulletLoc:Array = new Array();
+				bulletLoc.push(projectiles[j].getX());
+				bulletLoc.push(projectiles[j].getY());
+				bulletLoc.push(projectiles[j].getVelX());
+				bulletLoc.push(projectiles[j].getVelY());
+				bulletData.push(bulletLoc);
+			}
 			coms.sendFile(0,5000,shipData);
 			coms.sendFile(0,5001,shellData);
+			coms.sendFile(0,5002,bulletData);
 		}
 		
 		public function addEnemy(enemy:PlayerUnitShell):void
@@ -137,10 +148,12 @@ package Server
 			var dirY:Number = dy/mag;
 			projectiles.push(new ProjectileShell(spawnX,spawnY,dirX,dirY));
 			var bulletData:Array = new Array();
-			bulletData.push(projectiles[projectiles.length-1].getX());
-			bulletData.push(projectiles[projectiles.length-1].getY());
-			bulletData.push(projectiles[projectiles.length-1].getVelX());
-			bulletData.push(projectiles[projectiles.length-1].getVelY());	
+			var bulletLoc:Array = new Array();
+			bulletLoc.push(projectiles[projectiles.length-1].getX());
+			bulletLoc.push(projectiles[projectiles.length-1].getY());
+			bulletLoc.push(projectiles[projectiles.length-1].getVelX());
+			bulletLoc.push(projectiles[projectiles.length-1].getVelY());
+			bulletData.push(bulletLoc);
 			return bulletData;
 		}
 		
