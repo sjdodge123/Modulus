@@ -11,7 +11,6 @@ package Client
 		public function ShipFrame(spawnPointX:int,spawnPointY:int,shipWidth:int,shipHeight:int,seats:Array) 
 		{
 			this.seats = new Vector.<Seat>;
-			projectiles = new Vector.<Projectile>;
 			buildExteriorWalls(spawnPointX,spawnPointY,shipWidth,shipHeight);
 			addSeats(seats);
 		}
@@ -22,6 +21,11 @@ package Client
 			{
 				projectiles[i].update(dt);
 			}
+		}
+		
+		public function buildShip():void
+		{
+			projectiles = new Vector.<Projectile>;
 		}
 		
 		public function spawnBullet(spawnX:Number,spawnY:Number,velX:Number,velY:Number):void
@@ -54,6 +58,10 @@ package Client
 		{
 			removeChild(projectiles[index]);
 			projectiles.splice(index,1);
+		}
+		public function getProjectiles():Vector.<Projectile>
+		{
+			return projectiles;
 		}
 	}
 }

@@ -39,13 +39,26 @@ package Client
 			
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
+			coms.addEventListener(MessageEvent.UPDATE_BULLETS,updateBullets);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
 			coms.addEventListener(SpawnEvent.SPAWN_BULLET,spawnBullet);
 			coms.addEventListener(SpawnEvent.KILL_BULLET,killBullet);
 			coms.joinServer(clientIP,clientPort);
 		}
 		
-		
+		protected function updateBullets(event:MessageEvent):void
+		{
+			if(myShip.getProjectiles() == null)
+			{
+				myShip.buildShip();
+				var bulletData:Array = event.params as Array;
+				for(var i:int=0;i<bulletData.length;i++)
+				{
+					var bulletLoc:Array = bulletData[i];
+					myShip.spawnBullet(bulletLoc[0],bulletLoc[1],bulletLoc[2],bulletLoc[3]);
+				}
+			}
+		}		
 		
 		protected function updateClient(event:Event):void
 		{
@@ -60,8 +73,6 @@ package Client
 				var bulletLoc:Array = bulletData[i];
 				myShip.spawnBullet(bulletLoc[0],bulletLoc[1],bulletLoc[2],bulletLoc[3]);
 			}
-			
-			
 		}
 		
 		protected function killBullet(event:SpawnEvent):void

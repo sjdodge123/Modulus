@@ -131,7 +131,7 @@ package Server
 			}
 			coms.sendFile(0,5000,shipData);
 			coms.sendFile(0,5001,shellData);
-			coms.sendFile(0,5002,bulletData);
+			coms.sendFile(0,5004,bulletData);
 		}
 		
 		public function addEnemy(enemy:PlayerUnitShell):void

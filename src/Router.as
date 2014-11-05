@@ -61,6 +61,10 @@ package
 				{
 					eventArray.push(new SpawnEvent(SpawnEvent.KILL_BULLET,file.content));			
 				}
+				if(file.route  == 5004) // Updates Bullet
+				{
+					eventArray.push(new MessageEvent(MessageEvent.UPDATE_BULLETS,file.content));			
+				}
 				if(file.route  == 6000) // Player Movement
 				{
 					eventArray.push(new MessageEvent(MessageEvent.UPDATE_POSITION,file.content));			

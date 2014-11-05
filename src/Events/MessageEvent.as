@@ -5,8 +5,9 @@ package Events
 	public class MessageEvent extends Event
 	{
 		public static const CLIENT_ID:String = "clientId";
-		public static const UPDATE_POSITION:String = "update_Position";
-		public static const UPDATE_LISTINGS:String = "update_Listings";
+		public static const UPDATE_POSITION:String = "updatePosition";
+		public static const UPDATE_LISTINGS:String = "updateListings";
+		public static const UPDATE_BULLETS:String = "updateBullets";
 		public var params:Object;
 		public function MessageEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 
 		{
