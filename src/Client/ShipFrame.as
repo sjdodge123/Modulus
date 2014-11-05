@@ -16,9 +16,17 @@ package Client
 			addSeats(seats);
 		}
 		
-		public function spawnBullet(spawnX:Number,spawnY:Number):void
+		public function update(dt:Number):void
 		{
-			projectiles.push(new Projectile(spawnX,spawnY));
+			for(var i:int=0;i<projectiles.length;i++)
+			{
+				projectiles[i].update(dt);
+			}
+		}
+		
+		public function spawnBullet(spawnX:Number,spawnY:Number,velX:Number,velY:Number):void
+		{
+			projectiles.push(new Projectile(spawnX,spawnY,velX,velY));
 			addChild(projectiles[projectiles.length-1]);
 		}
 		
@@ -40,6 +48,12 @@ package Client
 			extWalls.graphics.drawRect(xSpawn, ySpawn,shipWidth, shipHeight);
 			extWalls.useHandCursor = false;
 			addChild(extWalls);
+		}
+		
+		public function killBullet(index:int):void
+		{
+			removeChild(projectiles[index]);
+			projectiles.splice(index,1);
 		}
 	}
 }

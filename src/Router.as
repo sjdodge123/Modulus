@@ -55,7 +55,11 @@ package
 				}
 				if(file.route  == 5002) // Spawn Bullet
 				{
-					eventArray.push(new SpawnEvent(SpawnEvent.BULLET,file.content));			
+					eventArray.push(new SpawnEvent(SpawnEvent.SPAWN_BULLET,file.content));			
+				}
+				if(file.route  == 5003) // Kill Bullet
+				{
+					eventArray.push(new SpawnEvent(SpawnEvent.KILL_BULLET,file.content));			
 				}
 				if(file.route  == 6000) // Player Movement
 				{

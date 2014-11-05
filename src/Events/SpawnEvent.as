@@ -4,7 +4,8 @@ package Events
 	
 	public class SpawnEvent extends Event
 	{
-		public static const BULLET:String = "bullet";
+		public static const SPAWN_BULLET:String = "spawnBullet";
+		public static const KILL_BULLET:String = "killBullet";
 		
 		public var params:Object;
 		public function SpawnEvent(type:String,params:Object,bubbles:Boolean = false,cancelable:Boolean = false) 

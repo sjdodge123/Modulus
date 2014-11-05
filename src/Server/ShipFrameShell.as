@@ -3,10 +3,11 @@ package Server
 	import flash.events.Event;
 	import flash.geom.Point;
 	
+	import Client.PlayerUnit;
+	
 	import Events.ActionEvent;
 	import Events.MessageEvent;
 	import Events.ServerComsEvent;
-	import Client.PlayerUnit;
 	
 
 	public class ShipFrameShell
@@ -25,6 +26,7 @@ package Server
 		private var height:int = 400;
 		private var radius:int = 20;
 		private var currentPlayer:int =63;
+		private var bulletStuff:Array;
 		public function ShipFrameShell(coms:ServerComs, ... seats) 
 		{
 			friendlyPlayers = new Vector.<PlayerUnit>;
@@ -44,6 +46,19 @@ package Server
 			}
 		}
 		
+		public function update(dt:Number):void
+		{
+			for(var i:int=0;i<projectiles.length;i++)
+			{
+				bulletStuff = projectiles[i].update(dt);
+				if(checkBounds(bulletStuff[0],bulletStuff[1]))
+				{
+					projectiles.splice(i,1);
+					coms.sendFile(0,5003,i);
+				}
+			}
+		}
+		
 		protected function changeIndex(event:MessageEvent):void
 		{
 			currentPlayer = event.params as int;
@@ -57,7 +72,7 @@ package Server
 		{
 			var currentX:int = playerUnitShells[currentPlayer].getX();
 			var currentY:int = playerUnitShells[currentPlayer].getY();
-			if(checkBounds(currentX + event.params[0],currentY + event.params[1]))
+			if(checkBoundsPlayer(currentX + event.params[0],currentY + event.params[1]))
 			{
 				playerUnitShells[currentPlayer].setX(currentX + event.params[0]);
 				playerUnitShells[currentPlayer].setY(currentY + event.params[1]);
@@ -124,16 +139,27 @@ package Server
 			var bulletData:Array = new Array();
 			bulletData.push(projectiles[projectiles.length-1].getX());
 			bulletData.push(projectiles[projectiles.length-1].getY());
+			bulletData.push(projectiles[projectiles.length-1].getVelX());
+			bulletData.push(projectiles[projectiles.length-1].getVelY());	
 			return bulletData;
 		}
 		
-		public function checkBounds(xValue:int,yValue:int):Boolean
+		public function checkBoundsPlayer(xValue:int,yValue:int):Boolean
 		{
 			if((width+x -radius > xValue ) && (xValue > x +radius) && (yValue < height + y -radius) && (yValue > y +radius ))
 			{
 				return true;
 			}
 			return false;
+		}
+		
+		public function checkBounds(xValue:int,yValue:int):Boolean
+		{
+			if((width+x > xValue) && (xValue > x) && (yValue < height + y) && (yValue > y))
+			{
+				return false;
+			}
+			return true;
 		}
 		
 		public function getSeats():Array

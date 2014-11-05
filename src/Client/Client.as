@@ -17,11 +17,15 @@ package Client
 		private var playerList:Vector.<PlayerUnit>; 
 		private var myShip:ShipFrame;
 		private var myPlayer:PlayerUnit;
+		private var dt:Number = .5;
+		private var stage:Stage;
 		public function Client(stage:Stage,clientIP:String,clientPort:int)
 		{
 			screen = new ClientScreen(stage);
 			coms = new ClientComs();
 			IO = new IOMonitor(stage);
+			this.stage = stage;
+			
 			IO.addEventListener(MovementEvent.FORWARD,handleKeys);
 			IO.addEventListener(MovementEvent.REVERSE,handleKeys);
 			IO.addEventListener(MovementEvent.LEFT,handleKeys);
@@ -36,13 +40,26 @@ package Client
 			coms.addEventListener(ScreenEvent.SPAWN_SHIP,spawnShip);
 			coms.addEventListener(MessageEvent.UPDATE_LISTINGS,updateListings);
 			coms.addEventListener(MessageEvent.UPDATE_POSITION,movePlayers);
-			coms.addEventListener(SpawnEvent.BULLET,spawnBullet);
+			coms.addEventListener(SpawnEvent.SPAWN_BULLET,spawnBullet);
+			coms.addEventListener(SpawnEvent.KILL_BULLET,killBullet);
 			coms.joinServer(clientIP,clientPort);
+		}
+		
+		
+		
+		protected function updateClient(event:Event):void
+		{
+			myShip.update(dt);
 		}
 		
 		protected function spawnBullet(event:SpawnEvent):void
 		{
-			myShip.spawnBullet(event.params[0],event.params[1]);
+			myShip.spawnBullet(event.params[0],event.params[1],event.params[2],event.params[3]);
+		}
+		
+		protected function killBullet(event:SpawnEvent):void
+		{
+			myShip.killBullet(event.params as int);
 		}
 		
 		protected function performAction(event:ActionEvent):void
@@ -145,6 +162,7 @@ package Client
 				var seatArray:Array = shipData[4];
 				myShip = new ShipFrame(xLoc,yLoc,widthData,heightData,seatArray);
 				screen.addChild(myShip);
+				stage.addEventListener(Event.ENTER_FRAME,updateClient);
 			}
 		}		
 		
